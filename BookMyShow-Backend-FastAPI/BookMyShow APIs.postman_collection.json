@@ -1,0 +1,901 @@
+{
+	"info": {
+		"_postman_id": "16e78b02-b9dd-4e51-a736-473fffb4c54d",
+		"name": "BookMyShow APIs",
+		"description": "This is a BookMyShow-like ticket booking system. The API supports both user-facing and admin operations.",
+		"schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+		"_exporter_id": "27275218"
+	},
+	"item": [
+		{
+			"name": "User APIs",
+			"item": [
+				{
+					"name": "Authentication",
+					"item": [
+						{
+							"name": "Create/Login User",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/user/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Info",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										""
+									],
+									"query": [
+										{
+											"key": "user_id",
+											"value": null,
+											"disabled": true
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update User Info",
+							"request": {
+								"method": "PUT",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/user/{user_id}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"{user_id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Logout",
+							"request": {
+								"auth": {
+									"type": "noauth"
+								},
+								"method": "DELETE",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/{user_id}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"{user_id}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "1. **POST - Create New/Login Existing User**\n    \n\nThis request handles the creation of a new user.\n\nThe phone number and email are checked (one mandatory) for user creation. If any of the entry already exists in DB, then the user is Logged In with that accound ID.\n\n2\\. Get User Info\n\nDisplay user information. Query parameter can be made mandatory as per need.\n\n**3\\. User Detail Updation**\n\nA patch request is given for partial updates of any of the user details. (user id mandatory)\n\n4\\. **User Logout**\n\nOn this request, the \"signed_in\" filed of the user record is set to False which indicates the user is logged out. (user id mandatory)"
+				},
+				{
+					"name": "Browse and Booking",
+					"item": [
+						{
+							"name": "Filter Locations",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/explore/locations",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"explore",
+										"locations"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Movies in Location",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/explore/movies-{location_name}?language={name}&genre={genre}&format={format}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"explore",
+										"movies-{location_name}"
+									],
+									"query": [
+										{
+											"key": "language",
+											"value": "{name}",
+											"description": "Mention the language of the Movie (Malayalam, Tamil)"
+										},
+										{
+											"key": "genre",
+											"value": "{genre}",
+											"description": "Genre like - Thriller, Comedy"
+										},
+										{
+											"key": "format",
+											"value": "{format}",
+											"description": "Format like- 2D, 3D, etc"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Movie Info",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/movies/{movie_id}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"movies",
+										"{movie_id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Available shows",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/movies/{location_name}/{movie_name}/buytickets/?format={format}&language={language}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"movies",
+										"{location_name}",
+										"{movie_name}",
+										"buytickets",
+										""
+									],
+									"query": [
+										{
+											"key": "format",
+											"value": "{format}",
+											"description": "Select the desired format"
+										},
+										{
+											"key": "language",
+											"value": "{language}",
+											"description": "Select the required language"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Venue Filter shows",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/cinemas/{location_name}/{venue_name}/buytickets/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"cinemas",
+										"{location_name}",
+										"{venue_name}",
+										"buytickets",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Seat Availability",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/seat_layout/availability?show_id={id}&select_seats=1",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"seat_layout",
+										"availability"
+									],
+									"query": [
+										{
+											"key": "show_id",
+											"value": "{id}",
+											"description": "Enter the show ID"
+										},
+										{
+											"key": "select_seats",
+											"value": "1",
+											"description": "Enter the number of seats required"
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Lock required seats",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/user/lock",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"lock"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "1. **Filter Locations**\n    \n\nThis request is to fetch all the locations available within the platform. Select a location of your choice.\n\n2\\. **Movies in Location**\n\nThe request fetches the movies from the Mongo DB movie_details collection and displays the movies that runs on theaters at your selected location. The location, theater details are stored in PostgreSQL.\n\nLocation ID is a mandatory path parameter. Language, Genre, Format are all query parameters which are optional. One more more of there parameters can be selected and the request filters the shows running in theaters at your location and displays the movies that are thus available.\n\n**3.** Movie Info\n\nThis request gives the movie metadata- including the cast and crew metadata from the artist_details collection in MongoDB.\n\n4\\. Available Shows\n\nThis request takes you to the select desired show page in the application. It displays the shows of the selected movie available at your location. All the query parameters in this case are mandatory to return the desired show informations.\n\nIt gives the show date, time, venue and the filter information of your desired show.\n\n5\\. Venue Filter shows\n\nSimilar to the \"Available Shows request\", this request gives you the show details based on Venue search functionality. It gives you details of all the movies and their shows for the required date in that venue.\n\n6\\. Seat Availability\n\nThe seat availability request gives the available seats and their status - Available, Sold Out, Fast Filling; along with the currently unlocked/Not booked seats.  \nThis response can be referred to select the required row and seat number to be booked.\n\nShow ID and Number of seats required are mandatory fields for desired results.\n\n7\\. Lock Required seat\n\nThe request handles locking of the required seats for a time limit of 10mins. Within that duration, the seat must be booked, else it'll be auto unlocked for another booking.\n\nSchedule ID, Show ID along with the User ID are important fields to be passed for this request.\n\nThe entries of this request are unique to the Show ID. The seats selected for locking for a particular show are temporarily stored in the locked_seats array with the locked_time. As the particular seats are booked, they are added to the booking_details of the corresponding user."
+				},
+				{
+					"name": "Payment and Booking Initialising",
+					"item": [
+						{
+							"name": "Payment Preview",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/user/preview",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"preview"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Initiate payment",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/user/initiate",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"initiate"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "1. Payment Preview\n    \n\nIt shows the preview of the payment. The user ID, selected seats, promocode (if any) and the discounted price are all calculated and the preview of the same is shown to the user. The user, after confirming the preview, is redirected to the payment initiate page.\n\n2\\. Payment initiate\n\nThe initiate payment API accepts all the above information and provides a payment ID and total amount payable, which is passed onto the desired payment gateway. The gateway confirms the payment and returns a transaction ID which id done in confirm payment API."
+				},
+				{
+					"name": "Bookings",
+					"item": [
+						{
+							"name": "Confirm Booking",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/user/confirm",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"confirm"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Cancel booking",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/user/cancel",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"cancel"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "User Orders",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/user/bookings/{user_id}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"user",
+										"bookings",
+										"{user_id}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "1. Confirm Booking\n    \n\nThis request handles the confirmation of the locked seats. It accepts the payment id and the gateway transaction id to confirm the payment status\n\n2\\. Cancel Booking\n\nThe booking can be cancelled by giving the payment id.\n\n3\\. User Orders\n\nThis API fetches the till booked movie along with promo code applied and seat metadata."
+				}
+			],
+			"description": "The folder contains APIs that are to the user workflow.\n\nIt contains Authentication - user login and detail updation, Browsing movies and shows, Confirmation of seats and its Booking."
+		},
+		{
+			"name": "Admin APIs",
+			"item": [
+				{
+					"name": "Artist Management",
+					"item": [
+						{
+							"name": "Create Artist Records",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/artists/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"artists",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Artist Info",
+							"protocolProfileBehavior": {
+								"disableBodyPruning": true
+							},
+							"request": {
+								"method": "GET",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/artists/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"artists",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update artist info",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/artists/{artist_id}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"artists",
+										"{artist_id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove artist",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/artists/{artist_id}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"artists",
+										"{artist_id}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "1. Create Artist Records\n    \n\nThe request creates new artist metadata. The family and peers section can be initially set as NULL and later updated through the Patch request when sufficient records are made.\n\n2\\. Artist Info\n\nThis request fetches the artist and their info which can be integrated into the movie metadata request to fetch the artist details upon selection.\n\n3\\. Update Artist info\n\nThe request works in updating artist details or its peer and family information\n\n4\\. Remove artist\n\nThe request handles setting is_active status to False indicating the artist should not be displayed in the UI."
+				},
+				{
+					"name": "Movie Management",
+					"item": [
+						{
+							"name": "Create Movie Records",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/movies/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"movies",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Update movie info",
+							"request": {
+								"method": "PATCH",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/movies/{movie_id}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"movies",
+										"{movie_id}"
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Remove movie",
+							"request": {
+								"method": "DELETE",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": ""
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/movies/{movie_id}",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"movies",
+										"{movie_id}"
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "1. Create Movie Records\n    \n\nCreating new Movie records in the DB. The cast and crew information can be added by giving their corresponding IDs and mentioning the role their part in the movie.\n\n2\\. Update Movie Info\n\nUpdating any information in the movie details\n\n3\\. Remove Movie\n\nSetting is_available to False to show that the movie cannot be used for booking shows. Even though movies are not used in scheduling, some movie metadata still exists in the application. This is handled by the is_active option."
+				},
+				{
+					"name": "Location/Venue/Screen Management",
+					"item": [
+						{
+							"name": "New Location",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/locations/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"locations",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Venue",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/venues/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"venues",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Screen at Venue",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/screens/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"screens",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "1. New Location\n    \n\nCreate new Location.\n\n2\\. New Venue\n\nInsert venue details by referencing the Location ID. Venue description can also be added and facilities at the Venue can be given in an array.\n\n3\\. New Screen at Venue\n\nThis request handles the insert request for Screen information. The row and seats mention the row value (A,B,C, etc.) and their seats (1-10, etc) as a single key value pair i.e; you can insert a row value and its corresponding seat numbers as array for a single seat_layout dictionary . The next must correspond to the new row info.\n\nCategory filed stores the name, price and rows (as array) that come under the specific category."
+				},
+				{
+					"name": "Show/Schedules and Timing Management",
+					"item": [
+						{
+							"name": "New Schedule",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/schedule/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"schedule",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "New Shows",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/schedule/timings/?schedule_id={id}&days_ahead=",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"schedule",
+										"timings",
+										""
+									],
+									"query": [
+										{
+											"key": "schedule_id",
+											"value": "{id}",
+											"description": "Enter the schedule ID"
+										},
+										{
+											"key": "days_ahead",
+											"value": "",
+											"description": "Give the number of days the show needs to run."
+										}
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Promo Code Creation",
+							"request": {
+								"method": "POST",
+								"header": [],
+								"body": {
+									"mode": "raw",
+									"raw": "",
+									"options": {
+										"raw": {
+											"language": "json"
+										}
+									}
+								},
+								"url": {
+									"raw": "{{baseURL}}/admin/offers/promocodes/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"offers",
+										"promocodes",
+										""
+									]
+								}
+							},
+							"response": []
+						},
+						{
+							"name": "Promo Codes",
+							"request": {
+								"method": "GET",
+								"header": [],
+								"url": {
+									"raw": "{{baseURL}}/admin/offers/promocodes/",
+									"host": [
+										"{{baseURL}}"
+									],
+									"path": [
+										"admin",
+										"offers",
+										"promocodes",
+										""
+									]
+								}
+							},
+							"response": []
+						}
+					],
+					"description": "1. New Schedules\n    \n\nThis request creates the movie, screen and venue mapping as a schedule. This schedule ID is referenced in multiple areas to select the required show for booking.\n\n2\\. New Shows\n\nThe request handles creation of new shows and their timings.\n\nThe timings can be created for a particular schedule for set number of days. The show will be displayed for those many days - mentioned in days_ahead query parameter\n\n4\\. Promo Code Creation\n\nCreate promo codes that can be used by the user while booking confirmation.\n\n5\\. Get Promo Codes\n\nFetches all the promocodes along with their availability status from the database."
+				}
+			]
+		}
+	],
+	"event": [
+		{
+			"listen": "prerequest",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		},
+		{
+			"listen": "test",
+			"script": {
+				"type": "text/javascript",
+				"packages": {},
+				"requests": {},
+				"exec": [
+					""
+				]
+			}
+		}
+	],
+	"variable": [
+		{
+			"key": "baseURL",
+			"value": ""
+		}
+	]
+}
